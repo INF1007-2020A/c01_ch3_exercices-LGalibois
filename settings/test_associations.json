@@ -1,22 +1,18 @@
 {
-  "test_average": {
-    "name": "Calcul de la moyenne de 3 nombres",
+  "test_capitalize_first_letter": {
+    "name": "Première lettre en majuscule",
     "points": 1
   },
-  "test_to_radians": {
-    "name": "Conversion degrés -> radians",
+  "test_lower_case_names": {
+    "name": "Formater des noms minuscules",
     "points": 1
   },
-  "test_to_degrees": {
-    "name": "Conversion radians -> degrés",
+  "test_upper_case_names": {
+    "name": "Formater des noms majuscules",
     "points": 1
   },
-  "test_to_celsius": {
-    "name": "Conversion Farenheit -> Celsius",
-    "points": 1
-  },
-  "test_to_farenheit": {
-    "name": "Conversion Celsius -> Farenheit",
+  "test_linking_words": {
+    "name": "Mots de liaison en lettres minuscules",
     "points": 1
   }
 }
