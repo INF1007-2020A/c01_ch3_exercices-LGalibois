@@ -1,96 +1,96 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-import math
 import os
 import sys
 import unittest
 
-import exercice
+from exercice import *
 
 
 class TestExercice(unittest.TestCase):
-    def test_average(self):
-        values = [
-            (2, 4, 6),
-            (-1, 0, 1),
-            (-1, -2, -4)
-        ]
+	def setUp(self):
+		pass
 
-        output = [exercice.average(*v) for v in values]
-        answer = [sum(v) / len(v) for v in values]
+	def test_dissipated_power(self):
+		data = [(69, 420),
+		        (42, 9000)]
+		expected = [1_999_620,
+		            15_876_000]
+		output = [dissipated_power(d[0], d[1]) for d in data]
+		self.assertEqual(
+			expected,
+			output,
+			"Calcul incorrect"
+		)
 
-        self.assertListEqual(
-            output,
-            answer,
-            'Mauvais calcul de la moyenne'
-        )
-    
-    def test_to_radians(self):
-        values = [
-            (-5, 2, 0),
-            (10.0, 4, 59),
-            (360, 1, 3),
-            (400, 55, 6)
-        ]
+	def test_orthogonal(self):
+		data = [((1, 1), (-1, 1)),
+		        ((0, 0), (1, 1)),
+		        ((0, 0), (0, 0)),
+		        ((1, 1), (1, 1)),
+		        ((-1, -1), (1, 1))]
+		expected = [True,
+		            True,
+		            True,
+		            False,
+		            False]
+		output = [orthogonal(d[0], d[1]) for d in data]
+		self.assertEqual(
+			expected,
+			output,
+			"Calcul incorrect"
+		)
+	
+	def test_average(self):
+		data = [[1, 4, -2, 10],
+		        [1, 4, -1, 10, 0],
+		        [-12, -42, 1],
+		        [0xDEAD, 0xBEEF, 420, 69]]
+		expected = [5.0,
+		            3.75,
+		            1.0,
+		            26593.25]
+		output = [average(d) for d in data]
+		self.assertEqual(
+			expected,
+			output,
+			"Calcul incorrect"
+		)
 
-        output = [exercice.to_radians(*v) for v in values]
-        answer = [math.radians(v[0] + (v[1] + (v[2] / 60)) / 60) for v in values]
-
-        self.assertListEqual(
-            output,
-            answer,
-            'Mauvais calcul de degres -> radians'
-        )
-
-    def test_to_degrees(self):
-        def __to_degrees(rad: float) -> tuple:
-            degrees = math.degrees(rad)
-            minutes = (degrees % 1) * 60
-            seconds = (minutes % 1) * 60
-
-            return degrees - minutes, minutes - seconds, seconds
-            
-        values = [2, -4, 5, 4.09]
-
-        output = [exercice.to_degrees(v) for v in values]
-        answer = [__to_degrees(v) for v in values]
-
-        self.assertListEqual(
-            output,
-            answer,
-            'Mauvais calcul de radians -> degres'
-        )
-
-    def test_to_celsius(self):
-        values = [0, -25, 451]
-
-        output = [exercice.to_celsius(v) for v in values]
-        answer = [(v - 32) / 1.8 for v in values]
-
-        self.assertListEqual(
-            output,
-            answer,
-            'Mauvais calcul de farenheit -> celsius'
-        )
-
-    def test_to_farenheit(self):
-        values = [0, -25, 451]
-
-        output = [exercice.to_farenheit(v) for v in values]
-        answer = [v * 1.8 + 32 for v in values]
-
-        self.assertListEqual(
-            output,
-            answer,
-            'Mauvais calcul de celsius -> farenheit'
-        )
+	def test_bills(self):
+		data = [0,
+		        1,
+		        5,
+		        10,
+		        20,
+		        420,
+		        69,
+		        137,
+		        0xBABE]
+		expected = [(0, 0, 0, 0),
+		            (0, 0, 0, 1),
+		            (0, 0, 1, 0),
+		            (0, 1, 0, 0),
+		            (1, 0, 0, 0),
+		            (21, 0, 0, 0),
+		            (3, 0, 1, 4),
+		            (6, 1, 1, 2),
+		            (2390, 0, 1, 1)]
+		output = [bills(d) for d in data]
+		self.assertEqual(
+			expected,
+			output,
+			"Calcul incorrect"
+		)
+		
 
 
-if __name__ == '__main__':
-    if not os.path.exists('logs'):
-        os.mkdir('logs')
-    with open('logs/tests_results.txt', 'w') as f:
-        loader = unittest.TestLoader()
-        suite = loader.loadTestsFromModule(sys.modules[__name__])
-        unittest.TextTestRunner(f, verbosity=2).run(suite)
+if __name__ == "__main__":
+	if not os.path.exists("logs"):
+		os.mkdir("logs")
+	with open("logs/tests_results.txt", "w") as f:
+		loader = unittest.TestLoader()
+		suite = loader.loadTestsFromModule(sys.modules[__name__])
+		unittest.TextTestRunner(f, verbosity=2).run(suite)
+	# Pour mettre le résultat du log dans la console (plus pratique).
+	print(open("logs/tests_results.txt", "r").read())
